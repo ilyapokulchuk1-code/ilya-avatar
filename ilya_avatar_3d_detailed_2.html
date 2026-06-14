@@ -1,0 +1,403 @@
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
+*{margin:0;padding:0;box-sizing:border-box;}
+.portfolio-root{font-family:'Inter',sans-serif;background:#F5F2EC;color:#1F1F1F;height:100vh;display:flex;overflow:hidden;min-height:600px;}
+.left-panel{width:45%;height:100vh;position:sticky;top:0;flex-shrink:0;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding-bottom:1.5rem;}
+#three-canvas{position:absolute;top:0;left:0;width:100%;height:100%;}
+.nav-pills{position:relative;z-index:10;display:flex;flex-direction:column;gap:5px;width:82%;}
+.nav-pill{background:rgba(245,242,236,0.72);backdrop-filter:blur(14px);border:1px solid rgba(197,160,106,0.18);border-radius:40px;padding:9px 18px;cursor:pointer;font-size:11.5px;font-weight:500;color:#6B6459;letter-spacing:.04em;transition:all .3s ease;display:flex;align-items:center;gap:9px;}
+.nav-pill:hover{background:rgba(197,160,106,0.14);color:#1F1F1F;border-color:rgba(197,160,106,0.45);}
+.nav-pill.active{background:#1F1F1F;color:#F5F2EC;border-color:#1F1F1F;}
+.nav-num{font-size:10px;opacity:.5;font-weight:300;}
+.right-panel{width:55%;height:100vh;overflow-y:auto;}
+.right-panel::-webkit-scrollbar{width:3px;}
+.right-panel::-webkit-scrollbar-thumb{background:rgba(197,160,106,0.3);border-radius:2px;}
+.screen{min-height:100vh;padding:5rem 4rem 4rem 3rem;display:none;opacity:0;transform:translateY(18px);transition:opacity .5s ease,transform .5s ease;}
+.screen.active{display:flex;flex-direction:column;justify-content:center;}
+.screen.visible{opacity:1;transform:translateY(0);}
+.hero-name{font-size:clamp(2rem,3.8vw,3.3rem);font-weight:300;letter-spacing:-.02em;line-height:1.1;margin-bottom:.9rem;}
+.hero-name span{color:#C5A06A;}
+.hero-sub{font-size:14.5px;color:#6B6459;line-height:1.75;max-width:370px;margin-bottom:2.8rem;border-left:2px solid #C5A06A;padding-left:1rem;}
+.menu-items{display:flex;flex-direction:column;}
+.menu-item{padding:1.15rem 0;border-bottom:.5px solid rgba(31,31,31,.1);cursor:pointer;display:flex;align-items:center;justify-content:space-between;transition:all .22s ease;}
+.menu-item:first-child{border-top:.5px solid rgba(31,31,31,.1);}
+.menu-item:hover .mi-title{color:#C5A06A;}
+.menu-item:hover .mi-arrow{opacity:1;transform:translateX(0);}
+.mi-left{display:flex;align-items:baseline;gap:.9rem;}
+.mi-num{font-size:10.5px;color:#C5A06A;font-weight:300;letter-spacing:.1em;min-width:22px;}
+.mi-title{font-size:15.5px;font-weight:400;color:#1F1F1F;transition:color .22s ease;}
+.mi-arrow{font-size:17px;color:#C5A06A;opacity:0;transform:translateX(-7px);transition:all .22s ease;}
+.section-back{display:inline-flex;align-items:center;gap:7px;font-size:11px;color:#C5A06A;cursor:pointer;margin-bottom:2.2rem;letter-spacing:.07em;font-weight:500;text-transform:uppercase;transition:opacity .2s;}
+.section-back:hover{opacity:.65;}
+.section-tag{font-size:10.5px;font-weight:500;letter-spacing:.13em;text-transform:uppercase;color:#C5A06A;margin-bottom:.7rem;}
+.section-title{font-size:clamp(1.7rem,2.8vw,2.6rem);font-weight:300;letter-spacing:-.02em;line-height:1.15;color:#1F1F1F;margin-bottom:.5rem;}
+.section-subtitle{font-size:13.5px;color:#6B6459;margin-bottom:2.3rem;padding-bottom:1.8rem;border-bottom:.5px solid rgba(31,31,31,.1);}
+.section-body{font-size:14.5px;line-height:1.88;color:#3D3730;max-width:510px;}
+.section-body p{margin-bottom:1.35rem;}
+.section-body p:last-child{margin-bottom:0;}
+.accent-quote{border-left:2px solid #C5A06A;padding-left:1.1rem;margin:1.8rem 0;font-size:15px;font-style:italic;color:#6B6459;line-height:1.7;}
+.coming-soon{margin-top:2.5rem;padding:1.6rem;background:rgba(197,160,106,.06);border:.5px solid rgba(197,160,106,.2);border-radius:10px;font-size:12.5px;color:#6B6459;}
+@media(max-width:640px){.portfolio-root{flex-direction:column;height:auto;overflow:visible;}.left-panel{width:100%;height:260px;position:relative;}.right-panel{width:100%;height:auto;overflow:visible;}.screen{min-height:auto;padding:2.5rem 1.4rem 2rem;}}
+</style>
+
+<div class="portfolio-root" id="app">
+  <div class="left-panel" id="left-panel">
+    <canvas id="three-canvas"></canvas>
+    <div class="nav-pills" id="nav-pills">
+      <div class="nav-pill active" data-section="home"><span class="nav-num">—</span> Главная</div>
+      <div class="nav-pill" data-section="s1"><span class="nav-num">01</span> Стратегия</div>
+      <div class="nav-pill" data-section="s2"><span class="nav-num">02</span> Ассортимент</div>
+      <div class="nav-pill" data-section="s3"><span class="nav-num">03</span> Дизайнеры</div>
+      <div class="nav-pill" data-section="s4"><span class="nav-num">04</span> Маркетинг</div>
+      <div class="nav-pill" data-section="s5"><span class="nav-num">05</span> Шоурумы</div>
+    </div>
+  </div>
+
+  <div class="right-panel">
+    <div class="screen active" id="screen-home">
+      <div class="hero-name">Илья<br><span>Покульчук</span></div>
+      <div class="hero-sub">Соединяю продажи, ассортимент, дизайнеров и процессы в единую систему роста.</div>
+      <div class="menu-items">
+        <div class="menu-item" data-go="s1"><div class="mi-left"><span class="mi-num">01</span><span class="mi-title">Стратегия и управление</span></div><span class="mi-arrow">→</span></div>
+        <div class="menu-item" data-go="s2"><div class="mi-left"><span class="mi-num">02</span><span class="mi-title">Ассортимент и прибыль</span></div><span class="mi-arrow">→</span></div>
+        <div class="menu-item" data-go="s3"><div class="mi-left"><span class="mi-num">03</span><span class="mi-title">Работа с дизайнерами</span></div><span class="mi-arrow">→</span></div>
+        <div class="menu-item" data-go="s4"><div class="mi-left"><span class="mi-num">04</span><span class="mi-title">Маркетинг и продвижение</span></div><span class="mi-arrow">→</span></div>
+        <div class="menu-item" data-go="s5"><div class="mi-left"><span class="mi-num">05</span><span class="mi-title">Шоурумы и продажи</span></div><span class="mi-arrow">→</span></div>
+      </div>
+    </div>
+    <div class="screen" id="screen-s1">
+      <div class="section-back" data-go="home">← Назад</div>
+      <div class="section-tag">01 / Компетенция</div>
+      <div class="section-title">Стратегия<br>и управление</div>
+      <div class="section-subtitle">Управление, ответственность и участие в принятии решений</div>
+      <div class="section-body">
+        <p>Во всех проектах и компаниях, где я работал, я всегда выходил за рамки своих прямых обязанностей. Мне сложно смотреть только на свой участок работы, потому что я постоянно анализирую всю цепочку процессов и взаимосвязи между ними.</p>
+        <div class="accent-quote">Многие идеи появлялись не потому, что это входило в мои обязанности, а потому что я видел возможности для улучшения.</div>
+        <p>Я готов брать ответственность за решения и инициативу, но при этом мне важно иметь возможность обсуждать идеи и получать обратную связь, особенно на начальном этапе.</p>
+        <p>Поскольку речь идет о новой роли, которую мы фактически формируем с нуля, для меня важно выстроить открытый диалог и понимать ожидания компании, чтобы двигаться в правильном направлении.</p>
+      </div>
+    </div>
+    <div class="screen" id="screen-s2">
+      <div class="section-back" data-go="home">← Назад</div>
+      <div class="section-tag">02 / Компетенция</div>
+      <div class="section-title">Ассортимент<br>и прибыль</div>
+      <div class="section-subtitle">Аналитика ассортимента, закупок и прогнозирование спроса</div>
+      <div class="section-body"><p>Ассортимент — это не просто список позиций. Это живая система управления прибылью.</p><div class="coming-soon">Добавьте полный текст блока 02.</div></div>
+    </div>
+    <div class="screen" id="screen-s3">
+      <div class="section-back" data-go="home">← Назад</div>
+      <div class="section-tag">03 / Компетенция</div>
+      <div class="section-title">Работа<br>с дизайнерами</div>
+      <div class="section-subtitle">Дизайнерская экосистема и партнёрская сеть</div>
+      <div class="section-body"><p>Дизайнеры — это не просто канал продаж. Это партнёры.</p><div class="coming-soon">Добавьте полный текст блока 03.</div></div>
+    </div>
+    <div class="screen" id="screen-s4">
+      <div class="section-back" data-go="home">← Назад</div>
+      <div class="section-tag">04 / Компетенция</div>
+      <div class="section-title">Маркетинг<br>и продвижение</div>
+      <div class="section-subtitle">Контент, медиа и построение присутствия бренда</div>
+      <div class="section-body"><p>Маркетинг в дизайн-сегменте — это формирование образа жизни и доверия.</p><div class="coming-soon">Добавьте полный текст блока 04.</div></div>
+    </div>
+    <div class="screen" id="screen-s5">
+      <div class="section-back" data-go="home">← Назад</div>
+      <div class="section-tag">05 / Компетенция</div>
+      <div class="section-title">Шоурумы<br>и продажи</div>
+      <div class="section-subtitle">Торговое пространство как инструмент продажи идей</div>
+      <div class="section-body"><p>Шоурум — это не магазин. Это сцена, на которой разворачивается история о продукте.</p><div class="coming-soon">Добавьте полный текст блока 05.</div></div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script>
+(function(){
+const canvas=document.getElementById('three-canvas');
+const lp=document.getElementById('left-panel');
+const renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:false});
+renderer.shadowMap.enabled=true;
+renderer.shadowMap.type=THREE.PCFSoftShadowMap;
+renderer.outputEncoding=THREE.sRGBEncoding;
+renderer.toneMapping=THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure=1.1;
+
+function resize(){
+  const w=lp.offsetWidth,h=lp.offsetHeight;
+  renderer.setSize(w,h);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
+  cam.aspect=w/h; cam.updateProjectionMatrix();
+}
+
+const scene=new THREE.Scene();
+scene.background=new THREE.Color(0xF5F2EC);
+scene.fog=new THREE.FogExp2(0xF5F2EC,0.04);
+
+const cam=new THREE.PerspectiveCamera(42,1,0.01,100);
+cam.position.set(0,1.65,3.8);
+
+// Lights
+scene.add(new THREE.AmbientLight(0xF0EBE0,0.9));
+const sun=new THREE.DirectionalLight(0xffffff,1.4);
+sun.position.set(2,5,3); sun.castShadow=true; scene.add(sun);
+const fill=new THREE.DirectionalLight(0xE8D8C0,0.5);
+fill.position.set(-3,2,-1); scene.add(fill);
+const gold=new THREE.PointLight(0xC5A06A,1.8,7);
+gold.position.set(-1.5,2.5,2); scene.add(gold);
+const rim=new THREE.PointLight(0xD4B896,0.6,5);
+rim.position.set(2,1,-2); scene.add(rim);
+
+// ── AVATAR (loaded 3D model) ──
+const avatar=new THREE.Group();
+scene.add(avatar);
+
+// headG used for subtle head-tilt idle animation; wraps the loaded model
+const headG=new THREE.Group();
+avatar.add(headG);
+
+// Loading indicator (simple spinning ring shown while the GLB loads)
+const loaderRing=new THREE.Mesh(
+  new THREE.TorusGeometry(0.5,0.015,8,48,Math.PI*1.5),
+  new THREE.MeshStandardMaterial({color:0xC5A06A,emissive:0xC5A06A,emissiveIntensity:0.4})
+);
+loaderRing.position.set(0,1.2,0);
+scene.add(loaderRing);
+
+// On-screen error banner (so load failures are visible, not just in console)
+function showModelError(msg){
+  console.error('Model load error:',msg);
+  scene.remove(loaderRing);
+  let banner=document.getElementById('model-error-banner');
+  if(!banner){
+    banner=document.createElement('div');
+    banner.id='model-error-banner';
+    banner.style.cssText='position:absolute;left:50%;bottom:18px;transform:translateX(-50%);z-index:20;background:rgba(31,31,31,0.92);color:#F5F2EC;font-family:Inter,sans-serif;font-size:11.5px;padding:10px 16px;border-radius:8px;max-width:88%;text-align:center;line-height:1.5;border:1px solid rgba(197,160,106,0.4);';
+    lp.appendChild(banner);
+  }
+  banner.textContent='Не удалось загрузить 3D-модель: '+msg;
+}
+
+const MODEL_URL='https://drive.google.com/uc?export=download&id=1Cl1GFTH9H1-l5-ZLGPBLAGKlfZGiZhkd';
+
+const gltfLoader=new THREE.GLTFLoader();
+gltfLoader.load(
+  MODEL_URL,
+  (gltf)=>{
+    scene.remove(loaderRing);
+    const banner=document.getElementById('model-error-banner');
+    if(banner)banner.remove();
+
+    const model=gltf.scene;
+
+    // Auto-fit: center the model and scale it to a sensible height
+    const box=new THREE.Box3().setFromObject(model);
+    const size=new THREE.Vector3();
+    box.getSize(size);
+
+    const targetHeight=1.7; // meters
+    const scale=size.y>0?targetHeight/size.y:1;
+    model.scale.setScalar(scale);
+
+    // Re-measure after scaling, center on X/Z, place base on the floor (y=0)
+    const box2=new THREE.Box3().setFromObject(model);
+    const size2=new THREE.Vector3();
+    const center2=new THREE.Vector3();
+    box2.getSize(size2);
+    box2.getCenter(center2);
+
+    model.position.x -= center2.x;
+    model.position.z -= center2.z;
+    model.position.y -= box2.min.y;
+
+    model.traverse(o=>{
+      if(o.isMesh){
+        o.castShadow=true;
+        o.receiveShadow=true;
+      }
+    });
+
+    headG.add(model);
+
+    // Auto-frame camera on the loaded model (re-measure final bounds)
+    const box3=new THREE.Box3().setFromObject(model);
+    const size3=new THREE.Vector3();
+    const center3=new THREE.Vector3();
+    box3.getSize(size3);
+    box3.getCenter(center3);
+    lookY.v=center3.y;
+    const fitDist=(size3.y/2)/Math.tan((cam.fov*Math.PI/180)/2)+size3.z/2;
+    gsap.to(cam.position,{x:0,y:center3.y+size3.y*0.12,z:Math.max(fitDist*1.15,2.2),duration:1.2,ease:'power2.out'});
+  },
+  (xhr)=>{
+    if(xhr.total){
+      console.log('Loading model: '+Math.round(xhr.loaded/xhr.total*100)+'%');
+    }
+  },
+  (err)=>{
+    showModelError((err&&err.message)?err.message:'см. консоль (вероятно, CORS или неверный URL)');
+  }
+);
+
+// ── FLOOR SHADOW DISC ──
+const shadow=new THREE.Mesh(new THREE.CircleGeometry(0.55,32),new THREE.MeshStandardMaterial({color:0xE8E3DA,transparent:true,opacity:0.4}));
+shadow.rotation.x=-Math.PI/2;
+shadow.position.y=-0.005;
+scene.add(shadow);
+
+// ── SCENE PARTICLES ──
+const sceneObjects=[];
+const particles=[];
+
+function clearScene(){
+  sceneObjects.forEach(o=>{ scene.remove(o); if(o.geometry)o.geometry.dispose(); });
+  sceneObjects.length=0; particles.length=0;
+}
+
+function addStrategyScene(){
+  clearScene();
+  const lm=new THREE.LineBasicMaterial({color:0xC5A06A,transparent:true,opacity:0.45});
+  const pts=[[-2,1.5,0],[0,1.6,0],[2,1.2,0],[0,1.6,0],[-1.5,-0.3,0.8],[1.5,-0.3,-0.6]];
+  for(let i=0;i<pts.length-1;i+=2){
+    const g=new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(...pts[i]),new THREE.Vector3(...pts[i+1])]);
+    const l=new THREE.Line(g,lm); scene.add(l); sceneObjects.push(l);
+  }
+  for(let i=0;i<14;i++){
+    const s=0.03+Math.random()*0.055;
+    const d=new THREE.Mesh(new THREE.SphereGeometry(s,8,8),new THREE.MeshStandardMaterial({color:0xC5A06A,metalness:0.6,roughness:0.3,transparent:true,opacity:0.6+Math.random()*0.4}));
+    const a=(i/14)*Math.PI*2, r=1.4+Math.random()*1.0;
+    d.position.set(Math.cos(a)*r,(Math.random()-0.5)*2,Math.sin(a)*r*0.25);
+    scene.add(d); sceneObjects.push(d);
+    particles.push({mesh:d,speed:0.003+Math.random()*0.004,phase:Math.random()*Math.PI*2,r,a});
+  }
+}
+
+function addAssortmentScene(){
+  clearScene();
+  for(let i=0;i<9;i++){
+    const h=0.15+Math.random()*0.9;
+    const b=new THREE.Mesh(new THREE.BoxGeometry(0.14,h,0.14),new THREE.MeshStandardMaterial({color:0xC5A06A,metalness:0.4,roughness:0.4,transparent:true,opacity:0.4+Math.random()*0.45}));
+    b.position.set(-1.6+i*0.4, h/2-0.6,-1.0);
+    scene.add(b); sceneObjects.push(b);
+    particles.push({mesh:b,speed:0.004,phase:i*0.7,r:0,a:0});
+  }
+}
+
+function addDesignersScene(){
+  clearScene();
+  const nm=new THREE.MeshStandardMaterial({color:0xC5A06A,metalness:0.5,roughness:0.4});
+  const lm=new THREE.LineBasicMaterial({color:0xC5A06A,transparent:true,opacity:0.3});
+  const nps=[[0,1.4,0],[-1.3,1.0,0.3],[1.3,0.9,-0.2],[-1.7,0.1,0],[1.7,0.1,0],[-0.9,-0.6,0.5],[0.9,-0.6,-0.4]];
+  nps.forEach((p,i)=>{
+    const n=new THREE.Mesh(new THREE.SphereGeometry(i===0?0.1:0.06,12,12),nm.clone());
+    n.position.set(...p); scene.add(n); sceneObjects.push(n);
+    particles.push({mesh:n,speed:0.002+Math.random()*0.003,phase:Math.random()*Math.PI*2,r:0,a:0});
+  });
+  [[0,1],[0,2],[0,3],[1,3],[2,4],[3,5],[4,6],[5,6]].forEach(([a,b])=>{
+    const g=new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(...nps[a]),new THREE.Vector3(...nps[b])]);
+    const l=new THREE.Line(g,lm); scene.add(l); sceneObjects.push(l);
+  });
+}
+
+function addMarketingScene(){
+  clearScene();
+  const fm=new THREE.MeshStandardMaterial({color:0x1A1A1A,metalness:0.4,roughness:0.5});
+  for(let i=0;i<5;i++){
+    const sc=new THREE.Mesh(new THREE.BoxGeometry(0.45+Math.random()*0.3,0.28+Math.random()*0.16,0.025),fm);
+    const a=(i/5)*Math.PI*2;
+    sc.position.set(Math.cos(a)*1.8,0.4+Math.random()*0.5,Math.sin(a)*0.5);
+    sc.rotation.y=a+Math.PI;
+    scene.add(sc); sceneObjects.push(sc);
+    particles.push({mesh:sc,speed:0.003,phase:(i/5)*Math.PI*2,r:1.8,a});
+  }
+}
+
+function addShowroomScene(){
+  clearScene();
+  const lm=new THREE.MeshStandardMaterial({color:0xC5A06A,emissive:0xC5A06A,emissiveIntensity:0.5,metalness:0.8,roughness:0.15});
+  for(let i=0;i<5;i++){
+    const lg=new THREE.Group();
+    const lh=new THREE.Mesh(new THREE.ConeGeometry(0.1,0.18,8,1,true),lm);
+    lh.rotation.x=Math.PI;
+    const ls=new THREE.Mesh(new THREE.CylinderGeometry(0.012,0.012,0.38,6),new THREE.MeshStandardMaterial({color:0x111111,roughness:0.6}));
+    ls.position.y=0.28;
+    lg.add(lh); lg.add(ls);
+    const a=(i/5)*Math.PI*2;
+    lg.position.set(Math.cos(a)*1.7,1.1,Math.sin(a)*0.4);
+    scene.add(lg); sceneObjects.push(lg);
+    particles.push({mesh:lg,speed:0.0015,phase:(i/5)*Math.PI*2,r:1.7,a});
+  }
+  const arch=new THREE.Mesh(new THREE.TorusGeometry(1.3,0.03,8,36,Math.PI),new THREE.MeshStandardMaterial({color:0xC5A06A,transparent:true,opacity:0.35,metalness:0.6,roughness:0.3}));
+  arch.position.set(0,0.05,-0.4); arch.rotation.z=Math.PI;
+  scene.add(arch); sceneObjects.push(arch);
+}
+
+const sectionScenes={home:addStrategyScene,s1:addStrategyScene,s2:addAssortmentScene,s3:addDesignersScene,s4:addMarketingScene,s5:addShowroomScene};
+const camTargets={
+  home:{x:0,y:1.65,z:3.8,ly:1.0},
+  s1:{x:0,y:1.65,z:3.8,ly:1.0},
+  s2:{x:3.2,y:1.5,z:2.5,ly:0.9},
+  s3:{x:4.5,y:1.8,z:2.2,ly:1.0},
+  s4:{x:0,y:1.8,z:-4.2,ly:1.0},
+  s5:{x:-3.2,y:1.6,z:2.5,ly:0.9}
+};
+
+const lookY={v:1.0};
+addStrategyScene();
+resize();
+
+let current='home';
+function switchSection(id){
+  if(id===current)return;
+  document.querySelectorAll('.screen').forEach(s=>{s.classList.remove('active','visible');});
+  document.querySelectorAll('.nav-pill').forEach(p=>p.classList.remove('active'));
+
+  const t=camTargets[id]||camTargets.home;
+  gsap.to(cam.position,{x:t.x,y:t.y,z:t.z,duration:1.8,ease:'power3.inOut'});
+  gsap.to(lookY,{v:t.ly,duration:1.8,ease:'power3.inOut'});
+  sectionScenes[id]&&sectionScenes[id]();
+  current=id;
+
+  const sc=document.getElementById('screen-'+id);
+  if(sc){sc.classList.add('active');requestAnimationFrame(()=>requestAnimationFrame(()=>sc.classList.add('visible')));}
+  const pill=document.querySelector(`.nav-pill[data-section="${id}"]`);
+  if(pill)pill.classList.add('active');
+}
+
+document.querySelectorAll('.nav-pill').forEach(p=>p.addEventListener('click',()=>switchSection(p.dataset.section)));
+document.querySelectorAll('.menu-item[data-go]').forEach(m=>m.addEventListener('click',()=>switchSection(m.dataset.go)));
+document.querySelectorAll('.section-back[data-go]').forEach(b=>b.addEventListener('click',()=>switchSection(b.dataset.go)));
+setTimeout(()=>{const s=document.getElementById('screen-home');if(s)s.classList.add('visible');},120);
+
+let t=0;
+function animate(){
+  requestAnimationFrame(animate);
+  t+=0.016;
+
+  // Subtle idle animation
+  avatar.position.y=Math.sin(t*0.7)*0.008;
+  avatar.rotation.y=Math.sin(t*0.18)*0.04;
+
+  // Head slight tilt
+  headG.rotation.y=Math.sin(t*0.22)*0.05;
+  headG.rotation.z=Math.sin(t*0.15)*0.015;
+
+  particles.forEach(p=>{
+    p.mesh.position.y+=Math.sin(t*p.speed*55+p.phase)*0.0015;
+    if(p.mesh.rotation)p.mesh.rotation.y+=p.speed*0.6;
+  });
+
+  gold.position.x=Math.sin(t*0.4)*2.5;
+  gold.position.z=Math.cos(t*0.4)*2;
+
+  cam.lookAt(0,lookY.v,0);
+  renderer.render(scene,camera);
+}
+
+// fix variable name
+const camera=cam;
+animate();
+window.addEventListener('resize',resize);
+resize();
+})();
+</script>
