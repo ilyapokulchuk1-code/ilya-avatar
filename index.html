@@ -111,6 +111,7 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/meshoptimizer@0.18.1/meshopt_decoder.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 <script>
 (function(){
@@ -181,6 +182,11 @@ function showModelError(msg){
 const MODEL_URL='https://cdn.jsdelivr.net/gh/ilyapokulchuk1-code/ilya-avatar@main/ii3d.glb';
 
 const gltfLoader=new THREE.GLTFLoader();
+if (typeof MeshoptDecoder !== 'undefined') {
+    gltfLoader.setMeshoptDecoder(MeshoptDecoder);
+} else {
+    console.error('MeshoptDecoder не найден');
+}
 gltfLoader.load(
   MODEL_URL,
   (gltf)=>{
